@@ -6,10 +6,8 @@ function [modified_up_grad, modified_res_grad,modified_hiddenWeight]=swithchGrad
     %fprintf('-----ele_res %d \n', size(res_grad));
     modified_hiddenWeight(:) = hiddenWeight(:);
     % determine the max value we want to replace with
-    length = round(size(permutation(:),1));
-    if (mod(length,2)~=0)
-        length = round(length);
-    end
+    length = size(permutation(:),1);
+    if length%
     %fprintf('------length is %d \n', length);
     total_replace_num = length/2;
     %fprintf('------total replace number is %d \n', total_replace_num);

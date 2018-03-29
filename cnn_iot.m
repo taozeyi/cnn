@@ -72,9 +72,11 @@ it = 0;
 C = [];
 dropRate = 0.1;
 n_wd = round(nd*dropRate);
+disp(n_wd);
 n_w1 = round(n1*dropRate);
+disp(n_w1);
 n_w2 = round(n2*dropRate);
-
+disp(n_w2);
 for e = 1:epochs
     
     rp = randperm(m);   % Rnadom permutation this is an Array 1-6000
@@ -288,9 +290,9 @@ for e = 1:epochs
                 pre_cost = cost;
                 
             else
-                p_wd = randweightedpick(Wd_hidden, n_wd);
-                p_w1 = randweightedpick(W_1_hidden, n_w1);
-                p_w2 = randweightedpick(W_2_hidden, n_w2);
+                p_wd = randweightedpick(Wd_hidden, n_wd)';
+                p_w1 = randweightedpick(W_1_hidden, n_w1)';
+                p_w2 = randweightedpick(W_2_hidden, n_w2)';
                 
                 for idx = p_wd(1:n_wd)
                     ele = Wd_grad(idx);

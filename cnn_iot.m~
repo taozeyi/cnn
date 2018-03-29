@@ -70,11 +70,13 @@ m = length(labels);     % Training Size
 % Traning
 it = 0;
 C = [];
-dropRate = 0.1;
+dropRate = 0.25;
 n_wd = round(nd*dropRate);
+disp(n_wd);
 n_w1 = round(n1*dropRate);
+disp(n_w1);
 n_w2 = round(n2*dropRate);
-
+disp(n_w2);
 for e = 1:epochs
     
     rp = randperm(m);   % Rnadom permutation this is an Array 1-6000
@@ -257,7 +259,6 @@ for e = 1:epochs
             pre_cost = cost;
             
         else
-            fprintf("-------did I reach here?");
             if pre_cost > cost
                 
                 for idx = p_wd(1:n_wd)
@@ -289,9 +290,9 @@ for e = 1:epochs
                 pre_cost = cost;
                 
             else
-                p_wd = randweightedpick(Wd_hidden, n_wd);
-                p_w1 = randweightedpick(W_1_hidden, n_w1);
-                p_w2 = randweightedpick(W_2_hidden, n_w2);
+                p_wd = randweightedpick(Wd_hidden, n_wd)';
+                p_w1 = randweightedpick(W_1_hidden, n_w1)';
+                p_w2 = randweightedpick(W_2_hidden, n_w2)';
                 
                 for idx = p_wd(1:n_wd)
                     ele = Wd_grad(idx);
@@ -328,11 +329,12 @@ for e = 1:epochs
             Wd_res_grad(:) = yw(:);
             Wd_hidde(:) = zw(:);
             
-            [xw1,yw1,zw1]=swithchGradient(W_1_up_grad,W_res_grad,Wd_hidden,p_wd(1:n_wd),sum(abs(Wd_grad(:)))/nd);
+            [xw1,yw1,zw1]=swithchGradient(W_1_up_grad,W_1_res_grad,W_1_hidden,p_w1(1:n_w1),sum(abs(W_1_grad(:)))/n1);
             W_1_up_grad(:) = xw1(:);
             W_1_res_grad(:) = yw1(:);
             W_1_hidden(:) = zw1(:);
-            [xw2,yw2,zw2]=swithchGradient(Wd_up_grad,Wd_res_grad,Wd_hidden,p_wd(1:n_wd),sum(abs(Wd_grad(:)))/nd);
+            
+            [xw2,yw2,zw2]=swithchGradient(W_2_up_grad,W_2_res_grad,W_2_hidden,p_w2(1:n_w2),sum(abs(W_2_grad(:)))/n2);
             W_2_up_grad(:) = xw2(:);
             W_2_res_grad(:) = yw2(:);
             W_2_hidden(:) = zw2(:);
